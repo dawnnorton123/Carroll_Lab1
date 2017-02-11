@@ -36,11 +36,11 @@ public class ApplicationTest {
 
     @Test
     public void renderTemplate() {
-        Content html = views.html.index.render("HELLO, WORLD");
+    	  Content html = views.html.index.render("HELLO, WORLD", play.data.Form.form(models.Task.class));
         assertThat(contentType(html)).isEqualTo("text/html");
         assertThat(contentAsString(html)).contains("HELLO, WORLD");
     }
-    
+  
     
     @Test
     public void testIndex() {
@@ -51,5 +51,5 @@ public class ApplicationTest {
         assertThat(contentAsString(result)).contains("HELLO, WORLD");
     }
 
-
+   
 }
