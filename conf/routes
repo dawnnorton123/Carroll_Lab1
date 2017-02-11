@@ -16,3 +16,6 @@ GET     /foo                        controllers.Application.index()
 
 
 POST    /task                       controllers.Application.addTask()
+
+
+GET     /tasks                      controllers.Application.getTasks()
