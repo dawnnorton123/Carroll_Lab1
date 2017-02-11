@@ -11,6 +11,9 @@ public class Task extends Model {
     @Id
     public String id;
 
+   // public String contents;
+    
+    @play.data.validation.Constraints.Required
     public String contents;
 
 }
