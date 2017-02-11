@@ -12,3 +12,4 @@ libraryDependencies ++= Seq(
   cache,
   javaWs
 )
+//delete Ebean and paste it right above put a , and put it under JavaWs
