@@ -1,35 +1,45 @@
 package controllers;
 
-import play.*;
-import play.mvc.*;
+import jpa.Task1;
+import models.TaskForm;
 
-import views.html.*;
+import services.TaskPersistenceService;
 
+import views.html.index;
+
+import play.data.Form;
+import play.mvc.Controller;
+import play.mvc.Result;
+
+import java.util.List;
+
+import javax.inject.Inject;
+import javax.inject.Named;
+
+@Named
 public class Application extends Controller {
 
-	 public static Result index() {
-	        return ok(index.render("hello, world", play.data.Form.form(models.Task.class)));
-	    }
+    @Inject
+    private TaskPersistenceService taskPersist;
 
-	   public static Result addTask() {
-	        play.data.Form<models.Task> form = play.data.Form.form(models.Task.class).bindFromRequest();
-	        if (form.hasErrors()) {
-	            return badRequest(index.render("hello, world", form));
-	        }
-	        else {
-	            models.Task task = form.get();
-	            task.save();
-	            return redirect(routes.Application.index());
-	        }
-	    }
-    
-    public static Result getTasks() {
-        java.util.List<models.Task> tasks = new play.db.ebean.Model.Finder(String.class, models.Task.class).all();
+    public Result index() {
+        return ok(index.render("hello, world", Form.form(TaskForm.class)));
+    }
+
+    public Result addTask() {
+        Form<TaskForm> form = Form.form(TaskForm.class).bindFromRequest();
+        if (form.hasErrors()) {
+            return badRequest(index.render("hello, world", form));
+        }
+
+        Task1 task = new Task1();
+        task.setContents(form.get().getContents());
+        taskPersist.saveTask(task);
+        return redirect(routes.Application.index());
+    }
+
+    public Result getTasks() {
+        List<Task1> tasks = taskPersist.fetchAllTasks();
         return ok(play.libs.Json.toJson(tasks));
     }
-    
-    
-   
-    
-    
 }
