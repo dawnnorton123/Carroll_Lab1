@@ -12,4 +12,6 @@ public interface TaskPersistenceService {
     void saveTask(Task1 t);
 
     List<Task1> fetchAllTasks();
-}
+    
+     }
+                                           

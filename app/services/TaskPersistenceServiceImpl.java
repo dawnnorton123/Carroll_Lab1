@@ -21,6 +21,9 @@ public class TaskPersistenceServiceImpl implements TaskPersistenceService {
     @Transactional
     @Override
     public void saveTask(Task1 task) {
+    	if (task == null) {
+            throw new IllegalArgumentException("Task must not be null");
+    	}
         if (task.getContents() == null) {
             throw new IllegalArgumentException("Contents must not be blank");
         }
